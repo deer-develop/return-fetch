@@ -10,7 +10,7 @@ export type ReturnFetchJsonDefaultOptions = ReturnFetchDefaultOptions & {
 };
 
 // Use as a replacer of `RequestInit`
-type JsonRequestInit = Omit<NonNullable<FetchArgs[1]>, "body"> & {
+export type JsonRequestInit = Omit<NonNullable<FetchArgs[1]>, "body"> & {
   body?: object;
 };
 
