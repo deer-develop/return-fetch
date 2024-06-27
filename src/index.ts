@@ -107,26 +107,29 @@ const applyDefaultOptions = (
 
 // To handle Request object we need to read body as ArrayBuffer.
 // If you have a better way, please let me know.
-const mergeRequestObjectWithRequestInit = (
+const mergeRequestObjectWithRequestInit = async(
   request: Request,
   requestInit?: RequestInit,
 ): Promise<RequestInit> => {
   const mergedRequest = new Request(request, requestInit);
-  return new Response(mergedRequest.body).arrayBuffer().then((body) => ({
+  
+  const body = await mergedRequest.arrayBuffer()
+  
+  return {
     method: mergedRequest.method,
     headers: mergedRequest.headers,
-    body: body,
+    body,
     referrer: mergedRequest.referrer,
     referrerPolicy: mergedRequest.referrerPolicy,
     mode: mergedRequest.mode,
-    credentials: mergedRequest.credentials,
     cache: mergedRequest.cache,
     redirect: mergedRequest.redirect,
+    credentials: mergedRequest.credentials,
     integrity: mergedRequest.integrity,
     keepalive: mergedRequest.keepalive,
     signal: mergedRequest.signal,
     window: requestInit?.window,
-  }));
+  }
 };
 
 const normalizeArgs = async (
